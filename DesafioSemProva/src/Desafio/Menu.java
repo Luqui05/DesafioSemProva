@@ -22,11 +22,12 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         switch (opcao) {
             case 1:
-                System.out.println("Digite o ano desejado: ");
-                int ano = sc.nextInt();
-                System.out.println(calcularMediaDisciplinaPorAno(alunos, ano));
-                System.out.println(calcularMedianaDisciplinaPorAno(alunos, ano));
-                System.out.println(calcularDesvioPadraoDisciplinaPorAno(alunos, ano));
+                System.out.println(calcularMediaDisciplinaPorAno(alunos, 2023));
+                System.out.println(calcularMedianaDisciplinaPorAno(alunos, 2023));
+                System.out.println(calcularDesvioPadraoDisciplinaPorAno(alunos, 2023));
+                System.out.println(calcularMediaDisciplinaPorAno(alunos, 2024));
+                System.out.println(calcularMedianaDisciplinaPorAno(alunos, 2024));
+                System.out.println(calcularDesvioPadraoDisciplinaPorAno(alunos, 2024));
                 break;
             case 2:
                 System.out.println(calcularMediaDisciplina(alunos));
@@ -46,7 +47,7 @@ public class Menu {
         }
     }
 
-    private static void criarArquivoDeAlunosAprovados(List<Aluno> alunos) {
+    static void criarArquivoDeAlunosAprovados(List<Aluno> alunos) {
         Scanner sc = new Scanner(System.in);
         List<Aluno> alunosAprovados = new ArrayList<>();
         for (Aluno aluno : alunos) {
@@ -58,8 +59,8 @@ public class Menu {
 
         String[] linhas = {resultado};
 
-        System.out.println("Digite o caminho do arquivo para escrita");
-        String path = sc.nextLine();
+        //Caminho adaptado para o pc do IFPR
+        String path = "C:\\Users\\Aluno\\Desktop\\aprovados.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (String linha : linhas) {
@@ -71,7 +72,7 @@ public class Menu {
         }
     }
 
-    private static void criarArquivoDeAlunosReprovados(List<Aluno> alunos) {
+    static void criarArquivoDeAlunosReprovados(List<Aluno> alunos) {
         Scanner sc = new Scanner(System.in);
         List<Aluno> alunosReprovados1 = new ArrayList<>();
         List<Aluno> alunosReprovados2 = new ArrayList<>();
@@ -98,8 +99,8 @@ public class Menu {
 
         String[] linhas = {resultado};
 
-        System.out.println("Digite o caminho do arquivo para escrita");
-        String path = sc.nextLine();
+        //Caminho adaptado para o pc do IFPR
+        String path = "C:\\Users\\Aluno\\Desktop\\reprovados.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (String linha : linhas) {
@@ -111,15 +112,15 @@ public class Menu {
         }
     }
 
-    private static void criarArquivoDeMedia(List<Aluno> alunos) {
+    static void criarArquivoDeMedia(List<Aluno> alunos) {
         Scanner sc = new Scanner(System.in);
         String resultadoMedias2023 = calcularMediaDisciplinaPorAno(alunos, 2023);
         String resultadoMedias2024 = calcularMediaDisciplinaPorAno(alunos, 2024);
         String resultadoMedias = calcularMediaDisciplina(alunos);
         String[] linhas = {resultadoMedias, resultadoMedias2023, resultadoMedias2024};
 
-        System.out.println("Digite o caminho do arquivo para escrita");
-        String path = sc.nextLine();
+        //Caminho adaptado para o pc do IFPR
+        String path = "C:\\Users\\Aluno\\Desktop\\medias.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (String linha : linhas) {
@@ -131,7 +132,7 @@ public class Menu {
         }
     }
 
-    private static String determinarAlunosAprovadosReprovados(List<Aluno> alunos) {
+    static String determinarAlunosAprovadosReprovados(List<Aluno> alunos) {
         List<Aluno> alunosAprovados1 = new ArrayList<>();
         List<Aluno> alunosReprovados1 = new ArrayList<>();
         List<Aluno> alunosAprovados2 = new ArrayList<>();
@@ -172,7 +173,7 @@ public class Menu {
                 + "\ne foram reprovados os alunos: " + alunosReprovados4;
     }
 
-    private static String identificarMelhorDesempenho(List<Aluno> alunos) {
+    static String identificarMelhorDesempenho(List<Aluno> alunos) {
         List<AlunoMedia> medias = new ArrayList<>();
 
         for (Aluno aluno : alunos) {
@@ -185,7 +186,7 @@ public class Menu {
         return "As 3 melhores médias de notas finais foram: " + melhoresMedias;
     }
 
-    private static String identificarPiorDesempenho(List<Aluno> alunos) {
+    static String identificarPiorDesempenho(List<Aluno> alunos) {
         List<AlunoMedia> medias = new ArrayList<>();
 
         for (Aluno aluno : alunos) {
@@ -200,7 +201,7 @@ public class Menu {
         return "As 3 piores médias de notas finais foram: " + pioresMedias;
     }
 
-    private static String determinarQuantidadeAlunos(List<Aluno> alunos) {
+    static String determinarQuantidadeAlunos(List<Aluno> alunos) {
         Integer quantidadeAlunos = alunos.size();
 
         return "O número total de alunos é: " + quantidadeAlunos;
@@ -212,7 +213,7 @@ public class Menu {
                 .collect(Collectors.toList());
     }
 
-    private static String calcularMedianaDisciplina(List<Aluno> alunos) {
+    static String calcularMedianaDisciplina(List<Aluno> alunos) {
         List<Aluno> alunosSort = alunos;
 
         alunosSort.sort(Comparator.comparingDouble(Aluno::getNota1));
@@ -231,7 +232,7 @@ public class Menu {
                 + "\nMediana disciplina 3: " + medianaNota3 + "\nMediana disciplina 4: " + medianaNota4;
     }
 
-    private static String calcularMedianaDisciplinaPorAno(List<Aluno> alunos, int ano) {
+    static String calcularMedianaDisciplinaPorAno(List<Aluno> alunos, int ano) {
         List<Aluno> alunosDoAno = new ArrayList<>();
 
         for (Aluno aluno : alunos) {
