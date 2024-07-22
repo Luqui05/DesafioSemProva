@@ -1,14 +1,12 @@
 package Desafio;
 import java.util.List;
-import java.util.Scanner;
 
 import static Desafio.Menu.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Digite o caminho do arquivo: ");
-        String caminho = sc.nextLine();
+        String caminho = "teste.txt";
         List<Aluno> alunos = LeituraArquivo.tratamentoDados(caminho);
         System.out.println(calcularMediaDisciplinaPorAno(alunos, 2023));
         System.out.println(calcularMedianaDisciplinaPorAno(alunos, 2023));

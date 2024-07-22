@@ -19,7 +19,6 @@ public class Menu {
     }
 
     public static void roteador(List<Aluno> alunos, int opcao) {
-        Scanner sc = new Scanner(System.in);
         switch (opcao) {
             case 1:
                 System.out.println(calcularMediaDisciplinaPorAno(alunos, 2023));
@@ -48,7 +47,6 @@ public class Menu {
     }
 
     static void criarArquivoDeAlunosAprovados(List<Aluno> alunos) {
-        Scanner sc = new Scanner(System.in);
         List<Aluno> alunosAprovados = new ArrayList<>();
         for (Aluno aluno : alunos) {
             if(aluno.getNota1() >= 70 && aluno.getNota2() >= 70 && aluno.getNota3() >= 70 && aluno.getNota4() >= 70) {
@@ -60,7 +58,7 @@ public class Menu {
         String[] linhas = {resultado};
 
         //Caminho adaptado para o pc do IFPR
-        String path = "C:\\Users\\Aluno\\Desktop\\aprovados.txt";
+        String path = "src\\aprovados.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (String linha : linhas) {
@@ -73,7 +71,6 @@ public class Menu {
     }
 
     static void criarArquivoDeAlunosReprovados(List<Aluno> alunos) {
-        Scanner sc = new Scanner(System.in);
         List<Aluno> alunosReprovados1 = new ArrayList<>();
         List<Aluno> alunosReprovados2 = new ArrayList<>();
         List<Aluno> alunosReprovados3 = new ArrayList<>();
@@ -100,7 +97,7 @@ public class Menu {
         String[] linhas = {resultado};
 
         //Caminho adaptado para o pc do IFPR
-        String path = "C:\\Users\\Aluno\\Desktop\\reprovados.txt";
+        String path = "src\\reprovados.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (String linha : linhas) {
@@ -113,14 +110,13 @@ public class Menu {
     }
 
     static void criarArquivoDeMedia(List<Aluno> alunos) {
-        Scanner sc = new Scanner(System.in);
         String resultadoMedias2023 = calcularMediaDisciplinaPorAno(alunos, 2023);
         String resultadoMedias2024 = calcularMediaDisciplinaPorAno(alunos, 2024);
         String resultadoMedias = calcularMediaDisciplina(alunos);
         String[] linhas = {resultadoMedias, resultadoMedias2023, resultadoMedias2024};
 
         //Caminho adaptado para o pc do IFPR
-        String path = "C:\\Users\\Aluno\\Desktop\\medias.txt";
+        String path = "src\\media.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (String linha : linhas) {
@@ -180,7 +176,7 @@ public class Menu {
             double media = (aluno.getNota1() + aluno.getNota2() + aluno.getNota3() + aluno.getNota4()) / 4;
             medias.add(new AlunoMedia(aluno.getID(), media));
         }
-        medias.sort(Comparator.comparingDouble(AlunoMedia::getMedia));
+        BubbleSort.ordenarDecrescente(medias);
         List<AlunoMedia> melhoresMedias = medias.subList(0, 3);
 
         return "As 3 melhores médias de notas finais foram: " + melhoresMedias;
@@ -194,9 +190,9 @@ public class Menu {
             medias.add(new AlunoMedia(aluno.getID(), media));
         }
 
-        medias.sort(Comparator.comparingDouble(AlunoMedia::getMedia).reversed());
+        BubbleSort.ordenarCrescente(medias);
 
-        List<AlunoMedia> pioresMedias = medias.subList(medias.size() - 3, medias.size());
+        List<AlunoMedia> pioresMedias = medias.subList(0, 3);
 
         return "As 3 piores médias de notas finais foram: " + pioresMedias;
     }
@@ -216,16 +212,16 @@ public class Menu {
     static String calcularMedianaDisciplina(List<Aluno> alunos) {
         List<Aluno> alunosSort = alunos;
 
-        alunosSort.sort(Comparator.comparingDouble(Aluno::getNota1));
+        BubbleSort.ordenarCrescente1(alunosSort);
         double medianaNota1 = calcularMediana(alunosSort, Aluno::getNota1);
 
-        alunosSort.sort(Comparator.comparingDouble(Aluno::getNota2));
+        BubbleSort.ordenarCrescente2(alunosSort);
         double medianaNota2 = calcularMediana(alunosSort, Aluno::getNota2);
 
-        alunosSort.sort(Comparator.comparingDouble(Aluno::getNota3));
+        BubbleSort.ordenarCrescente3(alunosSort);
         double medianaNota3 = calcularMediana(alunosSort, Aluno::getNota3);
 
-        alunosSort.sort(Comparator.comparingDouble(Aluno::getNota4));
+        BubbleSort.ordenarCrescente4(alunosSort);
         double medianaNota4 = calcularMediana(alunosSort, Aluno::getNota4);
 
         return "Mediana disciplina 1: " + medianaNota1 + "\nMediana disciplina 2: " + medianaNota2
@@ -245,16 +241,16 @@ public class Menu {
             return "Nenhum aluno encontrado para o ano " + ano;
         }
 
-        alunosDoAno.sort(Comparator.comparingDouble(Aluno::getNota1));
+        BubbleSort.ordenarCrescente1(alunosDoAno);
         double medianaNota1 = calcularMediana(alunosDoAno, Aluno::getNota1);
 
-        alunosDoAno.sort(Comparator.comparingDouble(Aluno::getNota2));
+        BubbleSort.ordenarCrescente2(alunosDoAno);
         double medianaNota2 = calcularMediana(alunosDoAno, Aluno::getNota2);
 
-        alunosDoAno.sort(Comparator.comparingDouble(Aluno::getNota3));
+        BubbleSort.ordenarCrescente3(alunosDoAno);
         double medianaNota3 = calcularMediana(alunosDoAno, Aluno::getNota3);
 
-        alunosDoAno.sort(Comparator.comparingDouble(Aluno::getNota4));
+        BubbleSort.ordenarCrescente4(alunosDoAno);
         double medianaNota4 = calcularMediana(alunosDoAno, Aluno::getNota4);
 
         return "Mediana disciplina 1 " + ano + ": " + medianaNota1 + "\nMediana disciplina 2 " + ano + ": " + medianaNota2
@@ -304,10 +300,18 @@ public class Menu {
         return new double[]{somaNota1 / contador, somaNota2 / contador, somaNota3 / contador, somaNota4 / contador};
     }
 
+    /**
+     * Calcula as variâncias das notas de cada disciplina de uma lista de alunos.
+     *
+     * @param alunos a lista de alunos
+     * @param medias as médias das notas de cada disciplina
+     * @return um array contendo as variâncias das notas de cada disciplina
+     */
     private static double[] calcularVariancias(List<Aluno> alunos, double[] medias) {
         double somaQuadrados1 = 0, somaQuadrados2 = 0, somaQuadrados3 = 0, somaQuadrados4 = 0;
         int contador = alunos.size();
 
+        // Calcula a soma dos quadrados das diferenças entre cada nota e a média da disciplina correspondente
         for (Aluno aluno : alunos) {
             somaQuadrados1 += Math.pow(aluno.getNota1() - medias[0], 2);
             somaQuadrados2 += Math.pow(aluno.getNota2() - medias[1], 2);
@@ -315,27 +319,49 @@ public class Menu {
             somaQuadrados4 += Math.pow(aluno.getNota4() - medias[3], 2);
         }
 
+        // Retorna as variâncias dividindo as somas dos quadrados pelo número de alunos
         return new double[]{somaQuadrados1 / contador, somaQuadrados2 / contador, somaQuadrados3 / contador, somaQuadrados4 / contador};
     }
 
+    /**
+     * Calcula o desvio padrão das notas de cada disciplina para um determinado ano.
+     *
+     * @param alunos a lista de alunos
+     * @param ano o ano para filtrar os alunos
+     * @return uma string formatada contendo os desvios padrão das notas de cada disciplina para o ano especificado
+     */
     public static String calcularDesvioPadraoDisciplinaPorAno(List<Aluno> alunos, int ano) {
+        // Filtra a lista de alunos pelo ano especificado
         List<Aluno> alunosAno = filtrarAlunosPorAno(alunos, ano);
 
+        // Verifica se há alunos para o ano especificado
         if (alunosAno.isEmpty()) {
             return "Nenhum aluno encontrado para o ano " + ano;
         }
 
+        // Calcula as médias das notas dos alunos filtrados
         double[] medias = calcularMedias(alunosAno);
+        // Calcula as variâncias das notas dos alunos filtrados
         double[] variancias = calcularVariancias(alunosAno, medias);
 
+        // Formata e retorna os desvios padrão das notas de cada disciplina
         return String.format("Desvio padrão Disciplina 1 %d: %.2f\nDesvio padrão Disciplina 2 %d: %.2f\nDesvio padrão Disciplina 3 %d: %.2f\nDesvio padrão Disciplina 4 %d: %.2f",
                 ano, Math.sqrt(variancias[0]), ano, Math.sqrt(variancias[1]), ano, Math.sqrt(variancias[2]), ano, Math.sqrt(variancias[3]));
     }
 
+    /**
+     * Calcula o desvio padrão das notas de cada disciplina para todos os alunos.
+     *
+     * @param alunos a lista de alunos
+     * @return uma string formatada contendo os desvios padrão das notas de cada disciplina
+     */
     public static String calcularDesvioPadraoDisciplina(List<Aluno> alunos) {
+        // Calcula as médias das notas dos alunos
         double[] medias = calcularMedias(alunos);
+        // Calcula as variâncias das notas dos alunos
         double[] variancias = calcularVariancias(alunos, medias);
 
+        // Formata e retorna os desvios padrão das notas de cada disciplina
         return String.format("Desvio padrão Disciplina 1: %.2f\nDesvio padrão Disciplina 2: %.2f\nDesvio padrão Disciplina 3: %.2f\nDesvio padrão Disciplina 4: %.2f",
                 Math.sqrt(variancias[0]), Math.sqrt(variancias[1]), Math.sqrt(variancias[2]), Math.sqrt(variancias[3]));
     }
